@@ -5,8 +5,21 @@ import Note from "./Note";
 import CreateArea from "./CreateArea";
 
 function App() {
-  let [getTitle, setTitle] = useState();
+  let [getTitle, setTitle] = useState({
+    appTitle: "",
+    appContent: ""
+  });
   let [getDataArray, setDataArray] = useState([]);
+
+  function handleDelete(id) {
+    let indexHere = id;
+    setDataArray(function(prev) {
+      console.log();
+      return prev.filter(function(item, index) {
+        return index !== indexHere;
+      });
+    });
+  }
 
   return (
     <div>
@@ -18,7 +31,15 @@ function App() {
         getDataArray={getDataArray}
       />
       {getDataArray.map(function(title, index) {
-        return <Note key={index} title={title} content="Note content" />;
+        return (
+          <Note
+            handleDelete={handleDelete}
+            key={index}
+            index={index}
+            title={title.appTitle}
+            content={title.appContent}
+          />
+        );
       })}
 
       <Footer />

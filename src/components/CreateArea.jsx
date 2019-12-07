@@ -3,8 +3,25 @@ import React from "react";
 function CreateArea(props) {
   function handleTitle(event) {
     let title = event.target.value;
+    let name = event.target.name;
 
-    props.setTitle(title);
+    if (name === "title") {
+      props.setTitle(function(prev) {
+        //console.log(prev);
+        return {
+          appTitle: title,
+          appContent: prev.appContent
+        };
+      });
+    } else {
+      props.setTitle(function(prev) {
+        //console.log(prev);
+        return {
+          appTitle: prev.appTitle,
+          appContent: title
+        };
+      });
+    }
     // console.log(props.getTitle);
   }
 
@@ -22,7 +39,12 @@ function CreateArea(props) {
     <div>
       <form onSubmit={postNote}>
         <input onChange={handleTitle} name="title" placeholder="Title" />
-        <textarea name="content" placeholder="Take a note..." rows="3" />
+        <textarea
+          onChange={handleTitle}
+          name="content"
+          placeholder="Take a note..."
+          rows="3"
+        />
         <button type="submit">Add</button>
       </form>
     </div>
